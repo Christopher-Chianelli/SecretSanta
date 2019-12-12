@@ -1,0 +1,3 @@
+= Secret Santa
+
+Plan your secret santa with Optaplanner!

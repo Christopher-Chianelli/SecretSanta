@@ -15,7 +15,5 @@
  */
 
 export default interface DomainObject {
-  tenantId: number;
   id?: number;
-  version?: number;
 }

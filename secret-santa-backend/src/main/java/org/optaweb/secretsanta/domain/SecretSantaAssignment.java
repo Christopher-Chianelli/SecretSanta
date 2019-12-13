@@ -37,64 +37,45 @@ public class SecretSantaAssignment {
     @NotNull
     private Long id;
 
-    @NotBlank
-    private String subject;
-    @NotBlank
-    private String teacher;
-    @NotBlank
-    private String studentGroup;
-
-    @PlanningVariable(valueRangeProviderRefs = "timeslotRange")
+    @PlanningVariable(valueRangeProviderRefs = "personRange")
     @ManyToOne
-    private Timeslot timeslot;
-    @PlanningVariable(valueRangeProviderRefs = "roomRange")
+    private Person gifter;
+    
+    @PlanningVariable(valueRangeProviderRefs = "personRange")
     @ManyToOne
-    private Person room;
+    private Person reciever;
 
     private SecretSantaAssignment() {
     }
 
-    public SecretSantaAssignment(String subject, String teacher, String studentGroup) {
-        this.subject = subject.trim();
-        this.teacher = teacher.trim();
-        this.studentGroup = studentGroup.trim();
+    public SecretSantaAssignment(Person gifter, Person reciever) {
+        this.gifter = gifter;
+        this.reciever = reciever;
     }
 
     public Long getId() {
         return id;
     }
-
-    public String getSubject() {
-        return subject;
+    
+    public Person getGifter() {
+        return gifter;
     }
 
-    public String getTeacher() {
-        return teacher;
+    public void setGifter(Person gifter) {
+        this.gifter = gifter;
     }
 
-    public String getStudentGroup() {
-        return studentGroup;
+    public Person getReciever() {
+        return reciever;
     }
 
-    public Timeslot getTimeslot() {
-        return timeslot;
-    }
-
-    public void setTimeslot(Timeslot timeslot) {
-        this.timeslot = timeslot;
-    }
-
-    public Person getRoom() {
-        return room;
-    }
-
-    public void setRoom(Person room) {
-        this.room = room;
+    public void setReciever(Person reciever) {
+        this.reciever = reciever;
     }
 
     @Override
     public String toString() {
-        return subject + "(" + id + ")";
+        return gifter.getName() + " -> [&] -> " + reciever.getName();
     }
 
 }

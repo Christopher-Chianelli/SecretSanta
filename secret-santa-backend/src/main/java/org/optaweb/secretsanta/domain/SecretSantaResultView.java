@@ -14,16 +14,26 @@
  * limitations under the License.
  */
 
-package org.optaweb.secretsanta;
+package org.optaweb.secretsanta.domain;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.optaplanner.core.api.solver.SolverStatus;
 
-@SpringBootApplication
-public class SecretSantaSpringBootApp {
+public class SecretSantaResultView {
 
-    public static void main(String[] args) {
-        SpringApplication.run(SecretSantaSpringBootApp.class, args);
+    private SecretSantaResult result;
+    private SolverStatus solverStatus;
+
+    public SecretSantaResultView(SecretSantaResult result, SolverStatus solverStatus) {
+        this.result = result;
+        this.solverStatus = solverStatus;
+    }
+
+    public SecretSantaResult getResult() {
+        return result;
+    }
+
+    public SolverStatus getSolverStatus() {
+        return solverStatus;
     }
 
 }

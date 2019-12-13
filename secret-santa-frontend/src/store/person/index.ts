@@ -14,6 +14,13 @@
  * limitations under the License.
  */
 
-import PeoplePage from './people/PeoplePage';
+import * as personOperations from './operations';
+import * as personSelectors from './selectors';
+import reducer from './reducers';
 
-export { PeoplePage };
+export {
+  personOperations,
+  personSelectors
+};
+
+export default reducer;

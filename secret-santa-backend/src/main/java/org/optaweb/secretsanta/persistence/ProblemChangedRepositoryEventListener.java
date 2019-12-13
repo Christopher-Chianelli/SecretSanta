@@ -18,8 +18,7 @@ package org.optaweb.secretsanta.persistence;
 
 import org.optaweb.secretsanta.domain.Person;
 import org.optaweb.secretsanta.domain.SecretSantaAssignment;
-import org.optaweb.secretsanta.domain.Timeslot;
-import org.optaweb.secretsanta.solver.TimeTableSolverService;
+import org.optaweb.secretsanta.solver.SecretSantaSolverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.core.annotation.HandleAfterCreate;
 import org.springframework.data.rest.core.annotation.HandleAfterDelete;
@@ -32,27 +31,20 @@ import org.springframework.stereotype.Component;
 public class ProblemChangedRepositoryEventListener {
 
     @Autowired
-    private TimeTableSolverService timeTableSolverService;
+    private SecretSantaSolverService secretSantaSolverService;
 
     @HandleAfterCreate
     @HandleAfterSave
     @HandleAfterDelete
-    private void timeslotCreateSaveDelete(Timeslot timeslot) {
-        timeTableSolverService.reloadProblem();
+    private void personCreateSaveDelete(Person room) {
+    	secretSantaSolverService.reloadProblem();
     }
 
     @HandleAfterCreate
     @HandleAfterSave
     @HandleAfterDelete
-    private void roomCreateSaveDelete(Person room) {
-        timeTableSolverService.reloadProblem();
-    }
-
-    @HandleAfterCreate
-    @HandleAfterSave
-    @HandleAfterDelete
-    private void lessonCreateSaveDelete(SecretSantaAssignment lesson) {
-        timeTableSolverService.reloadProblem();
+    private void assignmentCreateSaveDelete(SecretSantaAssignment assignment) {
+    	secretSantaSolverService.reloadProblem();
     }
 
 }

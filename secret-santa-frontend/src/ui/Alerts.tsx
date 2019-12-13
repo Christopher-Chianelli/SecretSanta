@@ -24,7 +24,6 @@ import * as alertOperations from 'store/alert/operations';
 import moment from 'moment';
 import { useInterval } from 'util/FunctionalComponentUtils';
 import { BasicObject, ServerSideExceptionInfo } from 'types';
-import { ServerSideExceptionDialog } from './components/ServerSideExceptionDialog';
 
 interface StateProps {
   alerts: AlertInfo[];
@@ -43,12 +42,6 @@ const mapDispatchToProps: DispatchProps = {
 }
 
 export type Props = StateProps & DispatchProps;
-
-export function mapToComponent(component: AlertComponent, componentProps: BasicObject): React.ReactNode {
-  if (component === AlertComponent.SERVER_SIDE_EXCEPTION_DIALOG) {
-    return <ServerSideExceptionDialog {...componentProps as unknown as ServerSideExceptionInfo} />;
-  }
-}
 
 const Alerts: React.FC<Props> = (props) => {
   const [, updateState] = React.useState();
@@ -115,7 +108,6 @@ const Alerts: React.FC<Props> = (props) => {
             t={t}
             i18nKey={alert.i18nKey + ".message"}
             values={alert.params}
-            components={alert.components.map((c, index) => mapToComponent(c, alert.componentProps[index]))}
           />
         </Alert>
       ))}

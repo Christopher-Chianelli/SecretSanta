@@ -29,13 +29,10 @@ import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
 public class SecretSantaResult {
 
     @ProblemFactCollectionProperty
-    @ValueRangeProvider(id = "timeslotRange")
-    private List<Timeslot> timeslotList;
-    @ProblemFactCollectionProperty
-    @ValueRangeProvider(id = "roomRange")
-    private List<Person> roomList;
+    @ValueRangeProvider(id = "personRange")
+    private List<Person> personList;
     @PlanningEntityCollectionProperty
-    private List<SecretSantaAssignment> lessonList;
+    private List<SecretSantaAssignment> secretSantaAssignmentList;
 
     @PlanningScore
     private HardSoftScore score;
@@ -43,22 +40,17 @@ public class SecretSantaResult {
     private SecretSantaResult() {
     }
 
-    public SecretSantaResult(List<Timeslot> timeslotList, List<Person> roomList, List<SecretSantaAssignment> lessonList) {
-        this.timeslotList = timeslotList;
-        this.roomList = roomList;
-        this.lessonList = lessonList;
+    public SecretSantaResult(List<Person> personList, List<SecretSantaAssignment> secretSantaAssignmentList) {
+        this.personList = personList;
+        this.secretSantaAssignmentList = secretSantaAssignmentList;
     }
 
-    public List<Timeslot> getTimeslotList() {
-        return timeslotList;
+    public List<Person> getPersonList() {
+        return personList;
     }
 
-    public List<Person> getRoomList() {
-        return roomList;
-    }
-
-    public List<SecretSantaAssignment> getLessonList() {
-        return lessonList;
+    public List<SecretSantaAssignment> getSecretSantaAssignmentList() {
+        return secretSantaAssignmentList;
     }
 
     public HardSoftScore getScore() {

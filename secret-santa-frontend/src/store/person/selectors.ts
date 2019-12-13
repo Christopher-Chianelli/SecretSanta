@@ -13,7 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { AppState } from '../types';
+import Person from 'domain/Person';
 
-import PeoplePage from './people/PeoplePage';
+export const getPersonById = (state: AppState, id: number): Person => {
+  if (state.personList.isLoading) {
+    throw Error("Person list is loading");
+  }
+  return state.personList.personMapById.get(id) as Person;
+};
 
-export { PeoplePage };
+export const getPersonList = (state: AppState): Person[] => {
+  if (state.personList.isLoading) {
+    return [];
+  }
+  const out: Person[] = [];
+  state.personList.personMapById.forEach((value, key) => out.push(getPersonById(state, key)));
+  return out;
+};

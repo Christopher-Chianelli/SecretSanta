@@ -17,14 +17,8 @@
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import RestServiceClient from './rest/RestServiceClient';
-import { TenantData } from 'store/tenant/types';
-import { SkillList } from 'store/skill/types';
-import { SpotList } from 'store/spot/types';
-import { ContractList } from './contract/types';
-import { EmployeeList } from './employee/types';
-import { CurrentRosterState, CurrentShiftRoster, CurrentAvailabilityRoster, CurrentSolverState } from './roster/types';
+import { PersonList } from 'store/person/types';
 import { AlertList } from './alert/types';
-import { ShiftTemplateList } from './rotation/types';
 
 /**
  * ThunkCommand is a ThunkAction that has no result (it's typically something like
@@ -59,15 +53,6 @@ export type ThunkCommandFactory<V, A extends Action> = V extends void ?
   (value: V) => ThunkCommand<A>; // unary
 
 export interface AppState {
-  readonly tenantData: TenantData;
-  readonly skillList: SkillList;
-  readonly spotList: SpotList;
-  readonly contractList: ContractList;
-  readonly employeeList: EmployeeList;
-  readonly shiftTemplateList: ShiftTemplateList;
-  readonly rosterState: CurrentRosterState;
-  readonly shiftRoster: CurrentShiftRoster;
-  readonly availabilityRoster: CurrentAvailabilityRoster;
-  readonly solverState: CurrentSolverState;
+  readonly personList: PersonList;
   readonly alerts: AlertList;
 }

@@ -70,9 +70,9 @@
   </properties>
 
   <modules>
-    <module>employee-rostering-frontend</module>
-    <module>employee-rostering-backend</module>
-    <module>employee-rostering-standalone</module>
+    <module>secret-santa-frontend</module>
+    <module>secret-santa-backend</module>
+    <module>secret-santa-standalone</module>
   </modules>
 
   <dependencyManagement>

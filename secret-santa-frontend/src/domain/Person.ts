@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
-import PeoplePage from './people/PeoplePage';
+import DomainObject from './DomainObject';
 
-export { PeoplePage };
+export default interface Person extends DomainObject {
+  name: string;
+}

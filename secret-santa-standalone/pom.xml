@@ -41,13 +41,6 @@
                   <outputDirectory>${project.build.directory}/classes</outputDirectory>
                   <includes>**\/*</includes>
                 </artifactItem>
-                <artifactItem>
-                  <groupId>org.optaweb.secretsanta</groupId>
-                  <artifactId>secret-santa-backend</artifactId>
-                  <classifier>exec</classifier>
-                  <outputDirectory>${project.build.directory}/classes</outputDirectory>
-                  <excludes>**\/org/optaweb/secretsanta\/**\/*</excludes>
-                </artifactItem>
               </artifactItems>
             </configuration>
           </execution>
@@ -118,9 +111,9 @@
       <artifactId>secret-santa-backend</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.optaweb.secretsanta</groupId>
-      <artifactId>secret-santa-backend</artifactId>
-      <classifier>exec</classifier>
+      <groupId>jakarta.xml.bind</groupId>
+      <artifactId>jakarta.xml.bind-api</artifactId>
     </dependency>
+
   </dependencies>
 </project>

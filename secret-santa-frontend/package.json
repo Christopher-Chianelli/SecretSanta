@@ -43,10 +43,6 @@
     "test": "cross-env TZ=UTC react-scripts test --reporters=default --reporters=jest-junit --transformIgnorePatterns \"node_modules/(?!(lodash-es))/\"",
     "eject": "react-scripts eject",
     "coverage": "cross-env TZ=UTC npm run test -- --coverage --watchAll=false",
-    "lint": "eslint --ext .js,.ts,.tsx src/ cypress/",
-    "lint:fix": "npm run lint -- --fix",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run",
     "locktt": "locktt"
   },
   "jest-junit": {
@@ -79,8 +75,6 @@
     "@typescript-eslint/eslint-plugin": "^1.9.0",
     "@typescript-eslint/parser": "^1.9.0",
     "cross-env": "^6.0.3",
-    "cypress": "^3.6.1",
-    "cypress-failed-log": "^2.5.1",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.13.2",
     "enzyme-to-json": "^3.3.5",

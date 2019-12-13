@@ -17,68 +17,22 @@
 import {
   Button,
   ButtonVariant,
-  Dropdown,
-  DropdownItem,
-  DropdownToggle,
   Toolbar,
   ToolbarGroup,
   ToolbarItem,
 } from '@patternfly/react-core';
 import { BellIcon, CogIcon } from '@patternfly/react-icons';
-import Tenant from 'domain/Tenant';
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { tenantOperations } from 'store/tenant';
-import { AppState } from 'store/types';
 import {
   withRouter, RouteComponentProps
 } from 'react-router-dom'
 
-interface StateProps {
-  currentTenantId: number;
-  tenantList: Tenant[];
-}
+export type Props = RouteComponentProps;
 
-const mapStateToProps = ({ tenantData }: AppState): StateProps => ({
-  currentTenantId: tenantData.currentTenantId,
-  tenantList: tenantData.tenantList
-});
-
-interface ToolbarState {
-  isTenantSelectOpen: boolean;
-}
-
-export interface DispatchProps {
-  refreshTenantList: typeof tenantOperations.refreshTenantList;
-  changeTenant: typeof tenantOperations.changeTenant;
-}
-
-const mapDispatchToProps: DispatchProps = {
-  refreshTenantList: tenantOperations.refreshTenantList,
-  changeTenant: tenantOperations.changeTenant
-};
-
-export type Props = RouteComponentProps & StateProps & DispatchProps;
-
-export class ToolbarComponent extends React.Component<Props, ToolbarState> {
+export class ToolbarComponent extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
     this.state = {isTenantSelectOpen : false};
-  }
-
-  componentDidMount() {
-    this.props.refreshTenantList();
-  }
-
-  setCurrentTenant(newTenantId: number) {
-    this.setState({
-      isTenantSelectOpen: false
-    });
-    this.props.changeTenant({ tenantId: newTenantId, routeProps: this.props });
-  }
-
-  setIsTenantSelectOpen(isOpen: boolean) {
-    this.setState({ isTenantSelectOpen: isOpen });
   }
 
   render() {
@@ -93,57 +47,14 @@ export class ToolbarComponent extends React.Component<Props, ToolbarState> {
             <BellIcon />
           </Button>
         </ToolbarItem>
-        <ToolbarItem>
-          <Button
-            id="horizontal-example-uid-02"
-            aria-label="Settings actions"
-            variant={ButtonVariant.plain}
-            data-cy="settings"
-            onClick={() => this.props.history.push("/admin")}
-          >
-            <CogIcon />
-          </Button>
-        </ToolbarItem>
       </ToolbarGroup>
     );
-    const { tenantList, currentTenantId } = this.props;
-    const {isTenantSelectOpen} = this.state;
-    if (tenantList.length === 0) {
       return (
         <Toolbar>
-          <ToolbarGroup />
           {bellAndCog}
         </Toolbar>
-      )
-    }
-    else {
-      let currentTenant = tenantList.find(t => t.id === currentTenantId) as Tenant;
-      return (
-        <Toolbar>
-          <ToolbarGroup>
-            <ToolbarItem>
-              <Dropdown
-                isPlain
-                position="right"
-                onSelect={event =>
-                  this.setCurrentTenant(parseInt((event.target as HTMLElement).dataset.tenantid as string))}
-                isOpen={isTenantSelectOpen}
-                toggle={(
-                  <DropdownToggle onToggle={() => this.setIsTenantSelectOpen(!isTenantSelectOpen)}>
-                    {currentTenant.name}
-                  </DropdownToggle>
-                )}
-                dropdownItems={tenantList.map((tenant) => {
-                  return <DropdownItem data-tenantid={tenant.id} key={tenant.id}>{tenant.name}</DropdownItem>;
-                })}
-              />
-            </ToolbarItem>
-          </ToolbarGroup>
-          {bellAndCog}
-        </Toolbar>
-      )
-    }
+      );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ToolbarComponent));
+export default withRouter(ToolbarComponent);

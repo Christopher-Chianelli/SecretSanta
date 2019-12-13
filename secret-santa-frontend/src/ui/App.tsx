@@ -21,8 +21,7 @@ import './App.css';
 import Background from './components/Background';
 import Header from './header/Header';
 import Alerts from './Alerts';
-import { AdminPage, ShiftRosterPage, AvailabilityRosterPage, SkillsPage, SpotsPage, ContractsPage, 
-  EmployeesPage, RotationPage } from './pages';
+import { PeoplePage } from './pages';
 import { useMediaQuery } from 'react-responsive';
 import Navigation from './header/Navigation';
 
@@ -50,44 +49,9 @@ const App: React.FC = () => {
         <Alerts />
         <Switch>
           <Route
-            path="/:tenantId/skills"
+            path="/people"
             exact
-            component={SkillsPage}
-          />
-          <Route
-            path="/:tenantId/spots"
-            exact
-            component={SpotsPage}
-          />
-          <Route
-            path="/:tenantId/contracts"
-            exact
-            component={ContractsPage}
-          />
-          <Route
-            path="/:tenantId/employees"
-            exact
-            component={EmployeesPage}
-          />
-          <Route
-            path="/:tenantId/shift"
-            exact
-            component={ShiftRosterPage} 
-          />
-          <Route
-            path="/:tenantId/availability"
-            exact
-            component={AvailabilityRosterPage}
-          />
-          <Route
-            path="/:tenantId/rotation"
-            exact
-            component={RotationPage}
-          />
-          <Route
-            path="/admin"
-            exact
-            component={AdminPage}
+            component={PeoplePage}
           />
         </Switch>
       </PageSection>

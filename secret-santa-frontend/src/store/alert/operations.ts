@@ -27,18 +27,6 @@ export function showSuccessMessage(i18nKey: string, params?: BasicObject, compon
   return showMessage("success", i18nKey, params, components, componentProps);
 }
 
-export function showServerError(exceptionInfo: ServerSideExceptionInfo & BasicObject): AddAlertAction {
-  return addAlert({
-    i18nKey: "exception",
-    variant: "danger",
-    params: {
-      message: exceptionInfo.exceptionMessage,
-    },
-    components: [AlertComponent.SERVER_SIDE_EXCEPTION_DIALOG],
-    componentProps: [exceptionInfo]
-  });
-}
-
 export function showServerErrorMessage(message: string): AddAlertAction {
   return showErrorMessage("generic", { message: message });
 }

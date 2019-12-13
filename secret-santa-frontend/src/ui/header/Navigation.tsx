@@ -22,26 +22,16 @@ import { Link, withRouter } from 'react-router-dom';
 import { AppState } from 'store/types';
 import { connect } from 'react-redux';
 
-interface StateProps {
-  tenantId: number;
-}
+export type NavigationProps = RouteComponentProps & Pick<NavListProps, "variant">;
 
-const mapStateToProps = (state: AppState, ownProps: Pick<NavListProps, "variant">):
-StateProps & Pick<NavListProps, "variant"> => ({
-  tenantId: state.tenantData.currentTenantId,
-  variant: ownProps.variant
-});
-
-export type NavigationProps = RouteComponentProps & StateProps & Pick<NavListProps, "variant">;
-
-export const Navigation = ({ variant, tenantId, location }: NavigationProps) => {
+export const Navigation = ({ variant, location }: NavigationProps) => {
   const { t } = useTranslation("Navigation");
   return (
     <Nav aria-label="Nav">
       <NavList variant={variant}>
-        {['skills', 'spots', 'contracts', 'employees', 'shift', 'availability', 'rotation'].map(link => {
+        {['people'].map(link => {
           const itemId = link;
-          const path = `/${tenantId}/${itemId}`;
+          const path = `/${itemId}`;
           return (
             <NavItem
               key={itemId}
@@ -57,4 +47,4 @@ export const Navigation = ({ variant, tenantId, location }: NavigationProps) => 
   );
 };
 
-export default connect(mapStateToProps)(withRouter(Navigation));
+export default withRouter(Navigation);

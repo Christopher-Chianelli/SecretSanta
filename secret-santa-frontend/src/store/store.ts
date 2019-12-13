@@ -22,16 +22,9 @@ import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import RestServiceClient from './rest';
 import { AppState } from './types';
-import tenantReducer from './tenant';
-import skillReducer from './skill/reducers';
-import spotReducer from './spot/reducers';
-import contractReducer from './contract/reducers';
-import employeeReducer from './employee/reducers';
-import shiftTemplateReducer from './rotation/reducers';
+import personReducer from './person/reducers';
 import alertReducer from './alert/reducers';
 import axios from 'axios';
-import { rosterStateReducer, shiftRosterViewReducer, availabilityRosterReducer,
-  solverReducer } from './roster/reducers';
 
 export interface StoreConfig {
   readonly restBaseURL: string;
@@ -52,16 +45,7 @@ export function configureStore(
 
   // map reducers to state slices
   const rootReducer = combineReducers<AppState>({
-    tenantData: tenantReducer,
-    skillList: skillReducer,
-    spotList: spotReducer,
-    contractList: contractReducer,
-    employeeList: employeeReducer,
-    shiftTemplateList: shiftTemplateReducer,
-    rosterState: rosterStateReducer,
-    shiftRoster: shiftRosterViewReducer,
-    availabilityRoster: availabilityRosterReducer,
-    solverState: solverReducer,
+    personList: personReducer,
     alerts: alertReducer
   });
 

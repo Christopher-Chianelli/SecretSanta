@@ -62,12 +62,7 @@ export default class RestServiceClient {
       return Promise.resolve(res.data);
     }
     else if (this.dispatch !== null) {
-      if (typeJsonRegex.test(res.headers["content-type"])) {
-        this.dispatch(alert.showServerError(res.data as unknown as ServerSideExceptionInfo & BasicObject))
-      }
-      else {
-        this.dispatch(alert.showServerErrorMessage(res.statusText));
-      }
+      this.dispatch(alert.showServerErrorMessage(res.statusText));
       return Promise.reject(res.status);
     }
     else {

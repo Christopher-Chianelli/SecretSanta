@@ -20,6 +20,10 @@
     This module contains the Secret Santa Spring Boot example.
   </description>
   <url>https://www.optaplanner.org</url>
+  
+  <properties>
+    <checkstyle.skip>True</checkstyle.skip>
+  </properties>
 
   <dependencies>
     <!-- Internal dependencies -->

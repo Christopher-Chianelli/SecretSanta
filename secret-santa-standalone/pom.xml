@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.optaweb.secretsanta</groupId>
+    <artifactId>secret-santa</artifactId>
+    <version>7.32.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>secret-santa-standalone</artifactId>
+  <packaging>jar</packaging>
+
+  <name>Secret Santa Standalone</name>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpack</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.optaweb.secretsanta</groupId>
+                  <artifactId>secret-santa-frontend</artifactId>
+                  <type>zip</type>
+                  <outputDirectory>${project.build.directory}/react</outputDirectory>
+                  <includes>**\/*</includes>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.optaweb.secretsanta</groupId>
+                  <artifactId>secret-santa-backend</artifactId>
+                  <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                  <includes>**\/*</includes>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.optaweb.secretsanta</groupId>
+                  <artifactId>secret-santa-backend</artifactId>
+                  <classifier>exec</classifier>
+                  <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                  <excludes>**\/org/optaweb/secretsanta\/**\/*</excludes>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>position-react-build</id>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <phase>generate-sources</phase>
+            <configuration>
+              <outputDirectory>${project.build.outputDirectory}/static</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.build.directory}/react/secret-santa-frontend-${project.version}</directory>
+                  <filtering>false</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+            <configuration>
+              <classifier>exec</classifier>
+              <!--
+                Exclude this module's dependencies.
+                The Spring Boot plugin would place them to BOOT-INF/lib but that's not what we want.
+                We only want to repackage the combination of these artifacts that have been unpacked by dependency plugin.
+              -->
+              <excludes>
+                <exclude>
+                  <groupId>org.optaweb.secretsanta</groupId>
+                  <artifactId>secret-santa-backend</artifactId>
+                </exclude>
+              </excludes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>jakarta.validation</groupId>
+          <artifactId>jakarta.validation-api</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.optaweb.secretsanta</groupId>
+      <artifactId>secret-santa-backend</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.optaweb.secretsanta</groupId>
+      <artifactId>secret-santa-backend</artifactId>
+      <classifier>exec</classifier>
+    </dependency>
+  </dependencies>
+</project>

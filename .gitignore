@@ -10,9 +10,13 @@
 /*.ipr
 /*.iws
 /*.iml
+**/.project
+**/.settings
 
 # Repository wide ignore mac DS_Store files
 .DS_Store
+bin
+.classpath
 
 # Secret Santa Preferences and Info
 SecretSantaList.csv

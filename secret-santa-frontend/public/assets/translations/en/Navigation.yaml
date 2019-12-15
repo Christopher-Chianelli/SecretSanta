@@ -1,8 +1,3 @@
 ---
-skills: Skills
-spots: Spots
-contracts: Contracts
-employees: Employees
-shift: Shift
-availability: Availability
-rotation: Rotation
+persons: Persons
+assignments: Assignments

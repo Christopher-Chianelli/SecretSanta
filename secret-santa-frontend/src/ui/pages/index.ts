@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
-import PeoplePage from './people/PeoplePage';
+import PersonPage from './persons/PersonsPage';
+import AssignmentPage from './assignments/AssignmentPage';
 
-export { PeoplePage };
+export { PersonPage, AssignmentPage };

@@ -16,13 +16,14 @@
 
 package org.optaweb.secretsanta.solver;
 
-import java.time.Duration;
+import java.math.BigDecimal;
 
-import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
+import org.optaplanner.core.api.score.buildin.hardmediumsoftbigdecimal.HardMediumSoftBigDecimalScore;
 import org.optaplanner.core.api.score.stream.Constraint;
 import org.optaplanner.core.api.score.stream.ConstraintFactory;
 import org.optaplanner.core.api.score.stream.ConstraintProvider;
 import org.optaplanner.core.api.score.stream.Joiners;
+import org.optaweb.secretsanta.domain.Location;
 import org.optaweb.secretsanta.domain.SecretSantaAssignment;
 
 public class SecretSantaConstraintProvider implements ConstraintProvider {
@@ -30,9 +31,11 @@ public class SecretSantaConstraintProvider implements ConstraintProvider {
     @Override
     public Constraint[] defineConstraints(ConstraintFactory constraintFactory) {
         return new Constraint[] {
+                noGifterOrReciever(constraintFactory),
         		sameRecieverConflict(constraintFactory),
         		sameGifterConflict(constraintFactory),
-        		gifterIsRecieverConflict(constraintFactory)
+        		gifterIsRecieverConflict(constraintFactory),
+        		largerDistanceAward(constraintFactory)
         };
     }
 
@@ -40,21 +43,38 @@ public class SecretSantaConstraintProvider implements ConstraintProvider {
         return constraintFactory
                 .fromUniquePair(SecretSantaAssignment.class,
                         Joiners.equal(SecretSantaAssignment::getReciever))
-                .penalize("Same Reciever", HardSoftScore.ONE_HARD);
+                .penalize("Same Reciever", HardMediumSoftBigDecimalScore.ONE_HARD);
     }
     
     private Constraint sameGifterConflict(ConstraintFactory constraintFactory) {
         return constraintFactory
                 .fromUniquePair(SecretSantaAssignment.class,
                         Joiners.equal(SecretSantaAssignment::getGifter))
-                .penalize("Same Gifter", HardSoftScore.ONE_HARD);
+                .penalize("Same Gifter", HardMediumSoftBigDecimalScore.ONE_HARD);
     }
     
     private Constraint gifterIsRecieverConflict(ConstraintFactory constraintFactory) {
         return constraintFactory
-        		.from(SecretSantaAssignment.class)
+                .from(SecretSantaAssignment.class)
+                .filter(assignment -> assignment.getGifter() != null && assignment.getReciever() != null)
                 .filter(assignment -> assignment.getGifter().equals(assignment.getReciever()))
-                .penalize("Gifter is Reciever", HardSoftScore.ONE_HARD);
+                .penalize("Gifter is Reciever", HardMediumSoftBigDecimalScore.ONE_HARD);
+    }
+    
+    private Constraint noGifterOrReciever(ConstraintFactory constraintFactory) {
+        return constraintFactory
+                .from(SecretSantaAssignment.class)
+                .filter(assignment -> assignment.getGifter() == null || assignment.getReciever() == null)
+                .penalize("No Gifter or Reciever", HardMediumSoftBigDecimalScore.ONE_MEDIUM);
+    }
+    
+    private Constraint largerDistanceAward(ConstraintFactory constraintFactory) {
+        return constraintFactory
+                .from(SecretSantaAssignment.class)
+                .filter(assignment -> assignment.getGifter() != null && assignment.getReciever() != null)
+                .rewardBigDecimal("Larger Distance Award", HardMediumSoftBigDecimalScore.ONE_SOFT,
+                                  (m) -> BigDecimal.valueOf(Location.calculateDistanceBetween(m.getGifter().getLocation(),
+                                                                           m.getReciever().getLocation())));
     }
 
 }

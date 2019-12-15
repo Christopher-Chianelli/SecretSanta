@@ -16,7 +16,8 @@
 
 import * as React from 'react';
 import { AppState } from 'store/types';
-import { Text, Level, LevelItem, Pagination, Button, DataList, DataListItem, DataListItemRow, DataListItemCells, DataListCell, DataListAction } from '@patternfly/react-core';
+import { Level, LevelItem, Pagination, Button, Text } from '@patternfly/react-core';
+import { Table, IRow, TableHeader, TableBody } from '@patternfly/react-table';
 import { connect } from 'react-redux';
 import { Stream } from 'util/ImmutableCollectionOperations';
 import { stringFilter } from 'util/CommonFilters';
@@ -26,22 +27,33 @@ import FilterComponent from 'ui/components/FilterComponent';
 import { useTranslation } from 'react-i18next';
 import { getPropsFromUrl, setPropsInUrl, UrlProps } from 'util/BookmarkableUtils';
 import { withRouter, RouteComponentProps } from 'react-router';
+import { TrashIcon, SearchIcon } from '@patternfly/react-icons';
 
 interface StateProps {
   personList: Person[];
+}
+
+interface DispatchProps {
+  refreshPersonList: typeof personOperations.refreshPersonList;
+  removePerson: typeof personOperations.removePerson;
 }
 
 type DataTableUrlProps = UrlProps<"page" | "itemsPerPage" | "filter" | "sortBy" | "asc"> 
 
 const mapStateToProps = (state: AppState): StateProps => ({
   personList: personSelectors.getPersonList(state)
-}); 
+});
 
-export type Props = StateProps & RouteComponentProps;
+const mapDispatchToProps: DispatchProps = {
+  refreshPersonList: personOperations.refreshPersonList,
+  removePerson: personOperations.removePerson
+};
 
-export const PeoplePage: React.FC<Props> = (props) => {
+export type Props = StateProps & DispatchProps & RouteComponentProps;
+
+export const PeopleList: React.FC<Props> = (props) => {
   const { personList } = props;
-  const { t } = useTranslation("PeoplePage");
+  const { t } = useTranslation("PersonList");
 
   const urlProps = getPropsFromUrl<DataTableUrlProps>(props, {
     page: "1",
@@ -50,6 +62,10 @@ export const PeoplePage: React.FC<Props> = (props) => {
     sortBy: null,
     asc: "true"
   });
+
+  React.useEffect(() => {
+    props.refreshPersonList();
+  }, [props.refreshPersonList]);
   
   const filterText = urlProps.filter || "";
   const page = parseInt(urlProps.page as string);
@@ -84,7 +100,7 @@ export const PeoplePage: React.FC<Props> = (props) => {
           <Button
             aria-label="Add Tenant"
             data-cy="add-tenant"
-            onClick={() => props.history.push("/person/new")}
+            onClick={() => props.history.push("/persons/new")}
           >
             {t("add")}
           </Button>
@@ -101,46 +117,42 @@ export const PeoplePage: React.FC<Props> = (props) => {
           />
         </LevelItem>
       </Level>
-      <DataList aria-label="People">
-        { rowsInPage.map(person => (
-            <DataListItem aria-labelledby={person.name}>
-              <DataListItemRow>
-                <DataListItemCells
-                  dataListCells={[
-                    <DataListCell key="Name">
-                      {person.name}
-                    </DataListCell>,
-                  ]}
-                />
-                <DataListAction
-                  id={person.name + "-actions"}
-                  aria-labelledby="Actions"
-                  aria-label="Actions"
-                >
-                  <Button
-                    onClick={() => {
-                    }}
-                    variant="primary"
-                    key="delete-action"
-                  >
-                    Delete
-                  </Button>
-                  <Button
-                    onClick={() => {
-                    }}
-                    variant="primary"
-                    key="edit-action"
-                  >
-                    Delete
-                  </Button>
-                </DataListAction>
-              </DataListItemRow>
-            </DataListItem>	
-          ))
+      <Table
+        caption={t("persons")}
+        cells={[t("name"), ""]}
+        rows={
+          rowsInPage.map<IRow>(person => (
+            {
+              cells: [
+                (<td key={0}><Text>{person.name}</Text></td>),
+                (
+                  <td key={1}>
+                    <span
+                      style={{ 
+                        display: "grid",
+                        gridTemplateColumns: "1fr auto auto",
+                        gridColumnGap: "5px"
+                      }}
+                    >
+                      <span />
+                      <Button variant="link" onClick={() => props.history.push(`/persons/${person.id}`)}>
+                        <SearchIcon />
+                      </Button>
+                      <Button variant="link" onClick={() => props.removePerson(person)}>
+                        <TrashIcon />
+                      </Button>
+                    </span>
+                  </td>
+                )
+              ]
+            }))
         }
-      </DataList>
+      >
+        <TableHeader />
+        <TableBody />
+      </Table>
     </>
   );
 }
 
-export default connect(mapStateToProps)(withRouter(PeoplePage));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(PeopleList));

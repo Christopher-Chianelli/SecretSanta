@@ -16,6 +16,7 @@
 
 package org.optaweb.secretsanta.solver;
 
+import org.optaplanner.core.api.score.ScoreManager;
 import org.optaplanner.core.api.solver.SolverManager;
 import org.optaplanner.core.api.solver.SolverStatus;
 import org.optaweb.secretsanta.domain.SecretSantaResult;
@@ -28,21 +29,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/timeTable")
+@RequestMapping("/rest/assignments")
 public class SecretSantaSolverService {
 
     @Autowired
     private SecretSantaResultRepository timeTableRepository;
     @Autowired
     private SolverManager<SecretSantaResult, Long> solverManager;
+    @Autowired
+    private ScoreManager<SecretSantaResult> scoreManager;
 
     // To try, open http://localhost:8080/timeTable
     @GetMapping()
     public SecretSantaResultView getTimeTableView() {
-        SecretSantaResult timeTable = timeTableRepository.findById(SecretSantaResultRepository.SINGLETON_TIME_TABLE_ID);
-        solverManager.updateScore(timeTable);
+        SecretSantaResult result = timeTableRepository.findById(SecretSantaResultRepository.SINGLETON_TIME_TABLE_ID);
+        scoreManager.updateScore(result);
         SolverStatus solverStatus = solverManager.getSolverStatus(SecretSantaResultRepository.SINGLETON_TIME_TABLE_ID);
-        return new SecretSantaResultView(timeTable, solverStatus);
+        return new SecretSantaResultView(result, solverStatus);
     }
 
     @PostMapping("/solve")

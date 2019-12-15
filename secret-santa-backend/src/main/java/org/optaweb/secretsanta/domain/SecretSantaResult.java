@@ -23,7 +23,8 @@ import org.optaplanner.core.api.domain.solution.PlanningScore;
 import org.optaplanner.core.api.domain.solution.PlanningSolution;
 import org.optaplanner.core.api.domain.solution.drools.ProblemFactCollectionProperty;
 import org.optaplanner.core.api.domain.valuerange.ValueRangeProvider;
-import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
+import org.optaplanner.core.api.score.buildin.hardmediumsoftbigdecimal.HardMediumSoftBigDecimalScore;
+import org.optaplanner.core.impl.score.buildin.hardmediumsoftbigdecimal.HardMediumSoftBigDecimalScoreDefinition;
 
 @PlanningSolution
 public class SecretSantaResult {
@@ -34,8 +35,8 @@ public class SecretSantaResult {
     @PlanningEntityCollectionProperty
     private List<SecretSantaAssignment> secretSantaAssignmentList;
 
-    @PlanningScore
-    private HardSoftScore score;
+    @PlanningScore(scoreDefinitionClass=HardMediumSoftBigDecimalScoreDefinition.class)
+    private HardMediumSoftBigDecimalScore score;
 
     private SecretSantaResult() {
     }
@@ -53,11 +54,11 @@ public class SecretSantaResult {
         return secretSantaAssignmentList;
     }
 
-    public HardSoftScore getScore() {
+    public HardMediumSoftBigDecimalScore getScore() {
         return score;
     }
 
-    public void setScore(HardSoftScore score) {
+    public void setScore(HardMediumSoftBigDecimalScore score) {
         this.score = score;
     }
 }

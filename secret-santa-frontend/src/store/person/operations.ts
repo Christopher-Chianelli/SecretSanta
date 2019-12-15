@@ -33,14 +33,9 @@ export const addPerson: ThunkCommandFactory<Person,  AddAlertAction | AddPersonA
 export const removePerson: ThunkCommandFactory<Person,  AddAlertAction | RemovePersonAction> = person =>
   (dispatch, state, client) => {
     const personId = person.id;
-    return client.delete<boolean>(`/persons/${personId}`).then(isSuccess => {
-      if (isSuccess) {
-        dispatch(alert.showSuccessMessage("removePerson", { name: person.name }));
-        dispatch(actions.removePerson(person));
-      }
-      else {
-        dispatch(alert.showErrorMessage("removePersonError", { name: person.name }));
-      }
+    return client.delete<void>(`/persons/${personId}`).then(() => {
+      dispatch(alert.showSuccessMessage("removePerson", { name: person.name }));
+      dispatch(actions.removePerson(person));
     });
   };
 
@@ -53,11 +48,11 @@ export const updatePerson: ThunkCommandFactory<Person,  AddAlertAction | UpdateP
     });
   };
 
-export const refreshSkillList: ThunkCommandFactory<void, SetPersonListLoadingAction | RefreshPersonListAction> = () =>
+export const refreshPersonList: ThunkCommandFactory<void, SetPersonListLoadingAction | RefreshPersonListAction> = () =>
   (dispatch, state, client) => {
     dispatch(actions.setIsPersonListLoading(true));
-    return client.get<Person[]>(`/persons`).then(personList => {
-      dispatch(actions.refreshPersonList(personList));
+    return client.get<{ _embedded: { persons: Person[] }}>(`/persons`).then(personList => {
+      dispatch(actions.refreshPersonList(personList._embedded.persons));
       dispatch(actions.setIsPersonListLoading(false));
     });
   };

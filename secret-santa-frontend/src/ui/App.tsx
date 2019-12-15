@@ -21,7 +21,7 @@ import './App.css';
 import Background from './components/Background';
 import Header from './header/Header';
 import Alerts from './Alerts';
-import { PeoplePage } from './pages';
+import { PersonPage, AssignmentPage } from './pages';
 import { useMediaQuery } from 'react-responsive';
 import Navigation from './header/Navigation';
 
@@ -49,10 +49,15 @@ const App: React.FC = () => {
         <Alerts />
         <Switch>
           <Route
-            path="/people"
-            exact
-            component={PeoplePage}
-          />
+            path="/persons"
+          >
+            <PersonPage />
+          </Route>
+          <Route
+            path="/assignments"
+          >
+            <AssignmentPage />
+          </Route>
         </Switch>
       </PageSection>
     </Page>

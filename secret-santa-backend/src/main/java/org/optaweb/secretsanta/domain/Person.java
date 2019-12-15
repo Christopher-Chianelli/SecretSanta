@@ -35,12 +35,17 @@ public class Person {
 
     @NotBlank
     private String name;
+    
+    private Location location;
+    
+    private Long secretFactor;
 
     private Person() {
     }
 
-    public Person(String name) {
+    public Person(String name, Location location, Long secretFactor) {
         this.name = name.trim();
+        this.secretFactor = secretFactor;
     }
 
     public Long getId() {
@@ -49,6 +54,14 @@ public class Person {
 
     public String getName() {
         return name;
+    }
+    
+    public Location getLocation() {
+        return location;
+    }
+    
+    public Long getSecretFactor() {
+        return secretFactor;
     }
 
     @Override

@@ -13,22 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { AppState } from '../types';
-import Person from 'domain/Person';
+import Person from './Person';
+import Assignment from './Assignment';
+import HardMediumSoftScore from './HardMediumSoftScore';
 
-export const getPersonById = (state: AppState, id: number): Person|null => {
-  if (state.personList.isLoading) {
-    return null;
-  }
-  return state.personList.personMapById.get(id) as Person;
-};
-
-export const getPersonList = (state: AppState): Person[] => {
-  if (state.personList.isLoading) {
-    return [];
-  }
-  const out: Person[] = [];
-  state.personList.personMapById.forEach((value, key) => out.push(getPersonById(state, key) as Person));
-  console.log(out);
-  return out;
+export default interface ResultView {
+  result: {
+    personList: Person[],
+    secretSantaAssignmentList: Assignment[],
+    score: HardMediumSoftScore
+  };
+  solverStatus: "SOLVING_ACTIVE" | "NOT_SOLVING"
 };

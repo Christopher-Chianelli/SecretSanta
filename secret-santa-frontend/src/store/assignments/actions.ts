@@ -13,22 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { AppState } from '../types';
-import Person from 'domain/Person';
 
-export const getPersonById = (state: AppState, id: number): Person|null => {
-  if (state.personList.isLoading) {
-    return null;
-  }
-  return state.personList.personMapById.get(id) as Person;
-};
+import ResultView from 'domain/ResultView';
+import { ActionFactory } from '../types';
+import { ActionType, UpdateResultViewAction } from './types';
 
-export const getPersonList = (state: AppState): Person[] => {
-  if (state.personList.isLoading) {
-    return [];
-  }
-  const out: Person[] = [];
-  state.personList.personMapById.forEach((value, key) => out.push(getPersonById(state, key) as Person));
-  console.log(out);
-  return out;
-};
+export const updateResultView: ActionFactory<ResultView, UpdateResultViewAction> = resultView => ({
+  type: ActionType.UPDATE_RESULT_VIEW,
+  resultView
+});

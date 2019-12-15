@@ -25,10 +25,13 @@ const Header: React.FC<{ onNavToggle: () => void} > = ({ onNavToggle }) => {
   return (
     <PageHeader
       logo={(
-        <a href="https://www.optaplanner.org/" target="_blank" rel="noopener noreferrer">
-          <Brand src="/assets/images/optaPlannerLogo200px.png" alt="OptaPlanner Logo" />
-        </a>
+        <Brand src="/assets/images/optaPlannerLogo200px.png" alt="OptaPlanner Logo" />
       )}
+      logoProps={{
+        href: 'https://www.optaplanner.org',
+        target: '_blank',
+        rel: 'noopener noreferrer',
+      }}
       toolbar={<Toolbar />}
       topNav={laptopOrBigger && <Navigation variant="horizontal" />}
       showNavToggle={!laptopOrBigger}

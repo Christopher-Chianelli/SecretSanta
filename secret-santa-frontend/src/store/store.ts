@@ -25,6 +25,7 @@ import { AppState } from './types';
 import personReducer from './person/reducers';
 import alertReducer from './alert/reducers';
 import axios from 'axios';
+import assignmentsReducer from './assignments/reducers';
 
 export interface StoreConfig {
   readonly restBaseURL: string;
@@ -46,6 +47,7 @@ export function configureStore(
   // map reducers to state slices
   const rootReducer = combineReducers<AppState>({
     personList: personReducer,
+    assignments: assignmentsReducer,
     alerts: alertReducer
   });
 

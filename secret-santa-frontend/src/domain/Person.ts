@@ -15,7 +15,10 @@
  */
 
 import DomainObject from './DomainObject';
+import Location from './Location';
 
 export default interface Person extends DomainObject {
   name: string;
+  location: Location;
+  secretFactor: number;
 }

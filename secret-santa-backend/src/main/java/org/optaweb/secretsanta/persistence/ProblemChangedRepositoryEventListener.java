@@ -32,12 +32,26 @@ public class ProblemChangedRepositoryEventListener {
 
     @Autowired
     private SecretSantaSolverService secretSantaSolverService;
+    
+    @Autowired
+    private SecretSantaAssignmentRepository secretSantaAssignmentRepository;
 
     @HandleAfterCreate
+    private void personCreate(Person person) {
+        secretSantaAssignmentRepository.save(new SecretSantaAssignment(null, null));
+        secretSantaSolverService.reloadProblem();
+    }
+    
     @HandleAfterSave
+    private void personSave(Person person) {
+        secretSantaSolverService.reloadProblem();
+    }
+    
     @HandleAfterDelete
-    private void personCreateSaveDelete(Person room) {
-    	secretSantaSolverService.reloadProblem();
+    private void personDelete(Person person) {
+        SecretSantaAssignment randomAssignment = secretSantaAssignmentRepository.findAll().get(0);
+        secretSantaAssignmentRepository.delete(randomAssignment);
+        secretSantaSolverService.reloadProblem();
     }
 
     @HandleAfterCreate

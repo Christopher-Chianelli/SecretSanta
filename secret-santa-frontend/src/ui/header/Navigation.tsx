@@ -29,7 +29,7 @@ export const Navigation = ({ variant, location }: NavigationProps) => {
   return (
     <Nav aria-label="Nav">
       <NavList variant={variant}>
-        {['people'].map(link => {
+        {['persons', 'assignments'].map(link => {
           const itemId = link;
           const path = `/${itemId}`;
           return (

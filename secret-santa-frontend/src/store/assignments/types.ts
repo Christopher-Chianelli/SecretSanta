@@ -13,22 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { AppState } from '../types';
-import Person from 'domain/Person';
 
-export const getPersonById = (state: AppState, id: number): Person|null => {
-  if (state.personList.isLoading) {
-    return null;
-  }
-  return state.personList.personMapById.get(id) as Person;
-};
+import { Action } from 'redux';
+import ResultView from 'domain/ResultView';
 
-export const getPersonList = (state: AppState): Person[] => {
-  if (state.personList.isLoading) {
-    return [];
-  }
-  const out: Person[] = [];
-  state.personList.personMapById.forEach((value, key) => out.push(getPersonById(state, key) as Person));
-  console.log(out);
-  return out;
-};
+export enum ActionType {
+  UPDATE_RESULT_VIEW = 'UPDATE_RESULT_VIEW'
+}
+
+export interface UpdateResultViewAction extends Action<ActionType.UPDATE_RESULT_VIEW> {
+  readonly resultView: ResultView;
+}
+
+export type AssignmentsAction = UpdateResultViewAction;
+
+export interface ResultViewHolder {
+  readonly resultView: ResultView;
+}

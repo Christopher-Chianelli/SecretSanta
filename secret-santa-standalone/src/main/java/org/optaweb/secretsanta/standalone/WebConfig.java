@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.optaweb.employeerostering.standalone;
+package org.optaweb.secretsanta.standalone;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -29,8 +29,8 @@ public class WebConfig implements WebMvcConfigurer {
         
         // Forwards requests without file extensions (/0/employees, /admin,
         // but not /assets/images/optaplanner.png) to /index.html
-        registry.addViewController("/**/{spring:\\w+}")
-              .setViewName("forward:/");
+        //registry.addViewController("/**/{spring:\\w+}")
+        //      .setViewName("forward:/");
     }
 
 }

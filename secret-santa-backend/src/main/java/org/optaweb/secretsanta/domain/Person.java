@@ -16,10 +16,18 @@
 
 package org.optaweb.secretsanta.domain;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PreRemove;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -31,6 +39,7 @@ public class Person {
     @PlanningId
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
+    @Column(name = "id")
     private Long id;
 
     @NotBlank
@@ -39,6 +48,17 @@ public class Person {
     private Location location;
     
     private Long secretFactor;
+    
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "gifter", cascade = CascadeType.ALL)
+    private SecretSantaAssignment secretSantaAssignment = new SecretSantaAssignment(this, null);
+    
+    // Why do we have this?
+    // JPA has no way to automatically set foreign keys to null
+    // on delete, so we need to do it manually on
+    // the deleted entity, and to do that we need to have
+    // the entities to update
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reciever")
+    private Set<SecretSantaAssignment> recievers;
 
     private Person() {
     }
@@ -46,6 +66,11 @@ public class Person {
     public Person(String name, Location location, Long secretFactor) {
         this.name = name.trim();
         this.secretFactor = secretFactor;
+    }
+    
+    @PreRemove
+    private void preRemove() {
+        recievers.forEach( child -> child.setReciever(null));
     }
 
     public Long getId() {

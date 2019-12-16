@@ -16,12 +16,12 @@
 
 package org.optaweb.secretsanta.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import org.optaplanner.core.api.domain.entity.PlanningEntity;
@@ -33,12 +33,13 @@ import org.optaplanner.core.api.domain.variable.PlanningVariable;
 public class SecretSantaAssignment {
 
     @PlanningId
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
     @NotNull
+    @Column(name = "id")
     private Long id;
 
-    @PlanningVariable(valueRangeProviderRefs = "personRange")
-    @ManyToOne
+    @OneToOne
+    @MapsId
     private Person gifter;
     
     @PlanningVariable(valueRangeProviderRefs = "personRange")

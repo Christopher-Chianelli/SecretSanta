@@ -18,6 +18,7 @@ package org.optaweb.secretsanta.persistence;
 
 import org.optaweb.secretsanta.domain.Person;
 import org.optaweb.secretsanta.domain.SecretSantaAssignment;
+import org.optaweb.secretsanta.domain.SecretSantaConstraintConfiguration;
 import org.optaweb.secretsanta.solver.SecretSantaSolverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.core.annotation.HandleAfterCreate;
@@ -32,33 +33,19 @@ public class ProblemChangedRepositoryEventListener {
 
     @Autowired
     private SecretSantaSolverService secretSantaSolverService;
-    
-    @Autowired
-    private SecretSantaAssignmentRepository secretSantaAssignmentRepository;
-
-    @HandleAfterCreate
-    private void personCreate(Person person) {
-        secretSantaAssignmentRepository.save(new SecretSantaAssignment(null, null));
-        secretSantaSolverService.reloadProblem();
-    }
-    
-    @HandleAfterSave
-    private void personSave(Person person) {
-        secretSantaSolverService.reloadProblem();
-    }
-    
-    @HandleAfterDelete
-    private void personDelete(Person person) {
-        SecretSantaAssignment randomAssignment = secretSantaAssignmentRepository.findAll().get(0);
-        secretSantaAssignmentRepository.delete(randomAssignment);
-        secretSantaSolverService.reloadProblem();
-    }
 
     @HandleAfterCreate
     @HandleAfterSave
     @HandleAfterDelete
-    private void assignmentCreateSaveDelete(SecretSantaAssignment assignment) {
-    	secretSantaSolverService.reloadProblem();
+    private void personCreateSaveDelete(Person person) {
+        secretSantaSolverService.reloadProblem();
+    }
+    
+    @HandleAfterCreate
+    @HandleAfterSave
+    @HandleAfterDelete
+    private void configCreateSaveDelete(SecretSantaConstraintConfiguration config) {
+        secretSantaSolverService.reloadProblem();
     }
 
 }

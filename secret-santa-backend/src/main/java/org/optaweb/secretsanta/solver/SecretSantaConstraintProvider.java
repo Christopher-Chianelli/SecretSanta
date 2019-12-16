@@ -31,13 +31,12 @@ public class SecretSantaConstraintProvider implements ConstraintProvider {
     @Override
     public Constraint[] defineConstraints(ConstraintFactory constraintFactory) {
         return new Constraint[] {
-                noGifterOrReciever(constraintFactory),
-        		sameRecieverConflict(constraintFactory),
-        		sameGifterConflict(constraintFactory),
-        		gifterIsRecieverConflict(constraintFactory),
-        		largerDistanceAward(constraintFactory),
-        		largerSecretAward(constraintFactory),
-        		giftPair(constraintFactory)
+                noReciever(constraintFactory),
+                sameRecieverConflict(constraintFactory),
+                gifterIsRecieverConflict(constraintFactory),
+                largerDistanceAward(constraintFactory),
+                largerSecretAward(constraintFactory),
+                giftPair(constraintFactory)
         };
     }
 
@@ -48,32 +47,26 @@ public class SecretSantaConstraintProvider implements ConstraintProvider {
                 .penalize("Same Reciever", HardMediumSoftBigDecimalScore.ONE_HARD);
     }
     
-    private Constraint sameGifterConflict(ConstraintFactory constraintFactory) {
-        return constraintFactory
-                .fromUniquePair(SecretSantaAssignment.class,
-                        Joiners.equal(SecretSantaAssignment::getGifter))
-                .penalize("Same Gifter", HardMediumSoftBigDecimalScore.ONE_HARD);
-    }
-    
     private Constraint gifterIsRecieverConflict(ConstraintFactory constraintFactory) {
         return constraintFactory
                 .from(SecretSantaAssignment.class)
-                .filter(assignment -> assignment.getGifter() != null && assignment.getReciever() != null)
+                .filter(assignment -> assignment.getReciever() != null)
                 .filter(assignment -> assignment.getGifter().equals(assignment.getReciever()))
                 .penalize("Gifter is Reciever", HardMediumSoftBigDecimalScore.ONE_HARD);
     }
     
-    private Constraint noGifterOrReciever(ConstraintFactory constraintFactory) {
+    private Constraint noReciever(ConstraintFactory constraintFactory) {
         return constraintFactory
                 .from(SecretSantaAssignment.class)
-                .filter(assignment -> assignment.getGifter() == null || assignment.getReciever() == null)
-                .penalize("No Gifter or Reciever", HardMediumSoftBigDecimalScore.ONE_HARD);
+                .filter(assignment -> assignment.getReciever() == null)
+                .penalize("No Reciever", HardMediumSoftBigDecimalScore.ONE_HARD);
     }
     
     private Constraint giftPair(ConstraintFactory constraintFactory) {
         return constraintFactory
                 .fromUniquePair(SecretSantaAssignment.class,
-                                Joiners.equal(SecretSantaAssignment::getGifter, SecretSantaAssignment::getReciever))
+                                Joiners.equal(SecretSantaAssignment::getGifter, SecretSantaAssignment::getReciever),
+                                Joiners.equal(SecretSantaAssignment::getReciever, SecretSantaAssignment::getGifter))
                 .penalize("Gifter-Reciever Cycle", HardMediumSoftBigDecimalScore.ONE_MEDIUM);
     }
     

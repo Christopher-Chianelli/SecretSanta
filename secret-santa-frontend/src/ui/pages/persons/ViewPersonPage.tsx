@@ -32,6 +32,7 @@ interface DispatchProps {
     addPerson: typeof personOperations.addPerson;
     updatePerson: typeof personOperations.updatePerson;
     removePerson: typeof personOperations.removePerson;
+    refreshPersonList: typeof personOperations.refreshPersonList;
 }
   
 export type Props = StateProps & DispatchProps & RouteComponentProps<{ id: string }>;
@@ -43,7 +44,8 @@ const mapStateToProps = (state: AppState): StateProps => ({
 const mapDispatchToProps: DispatchProps = {
     addPerson: personOperations.addPerson,
     updatePerson: personOperations.updatePerson,
-    removePerson: personOperations.removePerson
+    removePerson: personOperations.removePerson,
+    refreshPersonList: personOperations.refreshPersonList
 };
 
 export const ViewPersonPage: React.FC<Props> = (props) =>  {
@@ -54,6 +56,9 @@ export const ViewPersonPage: React.FC<Props> = (props) =>  {
     const [ secret, setSecret ] = React.useState(person? person.secretFactor : 0);
     const [ location, setLocation ] = React.useState(person? person.location : null);
     const { t } = useTranslation("ViewPersonPage");
+    React.useEffect(() => {
+      props.refreshPersonList();
+    }, [props.refreshPersonList]);
     
     if (person !== lastPerson) {
       setLastPerson(person);

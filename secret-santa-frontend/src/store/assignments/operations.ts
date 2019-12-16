@@ -80,6 +80,7 @@ export const stopSolving: ThunkCommandFactory<void,  AddAlertAction> = () =>
 const finishSolving = (dispatch: ThunkDispatch<any,any,any>) => {
   if (timeoutId != null) {
     dispatch(alert.showInfoMessage("finishedSolving"));
+    dispatch(getAssignments());
     clearInterval(timeoutId);
     timeoutId = null;
   }

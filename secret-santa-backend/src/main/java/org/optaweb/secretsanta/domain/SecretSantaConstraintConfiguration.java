@@ -21,7 +21,7 @@ public class SecretSantaConstraintConfiguration {
     
     @ConstraintWeight("Larger Secret Distance Award")
     @Convert(converter = ScoreConvertor.class)
-    private HardMediumSoftBigDecimalScore largerSecretDistanceAward = HardMediumSoftBigDecimalScore.ofSoft(BigDecimal.valueOf(10000));
+    private HardMediumSoftBigDecimalScore largerSecretDistanceAward = HardMediumSoftBigDecimalScore.ofSoft(BigDecimal.valueOf(1));
     
     @ConstraintWeight("Larger Distance Award")
     @Convert(converter = ScoreConvertor.class)

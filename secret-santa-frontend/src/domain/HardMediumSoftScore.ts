@@ -20,9 +20,9 @@ export function isScoreZero(score: HardMediumSoftScore): boolean {
 export function getHardMediumSoftScoreFromString(hardMediumSoftScore: string): HardMediumSoftScore {
   const components = hardMediumSoftScore.split("/");
   return {
-    hardScore: parseInt(components[0]),
-    mediumScore: parseInt(components[1]),
-    softScore: parseInt(components[2])
+    hardScore: parseFloat(components[0]),
+    mediumScore: parseFloat(components[1]),
+    softScore: parseFloat(components[2])
   };
 }
 

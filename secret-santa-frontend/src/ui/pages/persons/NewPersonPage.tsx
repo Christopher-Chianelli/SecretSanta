@@ -48,7 +48,7 @@ const mapDispatchToProps: DispatchProps = {
     addPerson: personOperations.addPerson
 };
 
-const generateRandom = () => Math.floor(Math.random() * 10000000)
+const generateRandom = () => Math.floor(Math.random() * 5000)
 
 const addPerson = (props: Props, person: Person) => {
   props.addPerson(person);

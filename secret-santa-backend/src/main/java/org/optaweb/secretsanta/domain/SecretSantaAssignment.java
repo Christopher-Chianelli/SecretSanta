@@ -76,7 +76,7 @@ public class SecretSantaAssignment {
 
     @Override
     public String toString() {
-        return gifter.getName() + " -> [&] -> " + reciever.getName();
+        return gifter.getName() + " -> [&] -> " + ((reciever != null)? reciever.getName() : "Unassigned");
     }
 
 }

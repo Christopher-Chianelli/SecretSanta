@@ -83,7 +83,7 @@ export const ConfigurationPage: React.FC<Props> = (props) =>  {
               name="Larger Secret Distance Award"
               aria-describedby="Larger Secret Distance Award"
               value={secretScore}
-              onChange={n => setSecretScore(parseInt(n))}
+              onChange={n => setSecretScore(parseFloat(n))}
             />
           </FormGroup>
           <FormGroup
@@ -99,7 +99,7 @@ export const ConfigurationPage: React.FC<Props> = (props) =>  {
               name="Larger Distance Award"
               aria-describedby="Larger Distance Award"
               value={distanceScore}
-              onChange={n => setDistanceScore(parseInt(n))}
+              onChange={n => setDistanceScore(parseFloat(n))}
             />
           </FormGroup>
           <ActionGroup>

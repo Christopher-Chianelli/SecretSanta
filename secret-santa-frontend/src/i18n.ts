@@ -54,6 +54,15 @@ i18n
     // Load all namespaces on boot so users don't see an empty screen
     ns: [
       'Common',
+      'Alerts',
+      'AssignmentPage',
+      'PersonList',
+      'NewPersonPage',
+      'ViewPersonPage',
+      'ConfigurationPage',
+      'ScoreDisplay',
+      'ConfirmDialog',
+      'FilterComponent'
     ],
     debug: true,
     backend: {

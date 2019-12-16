@@ -41,12 +41,12 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "postshrinkwrap": "locktt",
     "postbuild": "rimraf docker/build && shx cp -r build docker",
     "typecheck": "tsc --noEmit",
     "test": "cross-env TZ=UTC react-scripts test --reporters=default --reporters=jest-junit --transformIgnorePatterns \"node_modules/(?!(lodash-es))/\"",
     "eject": "react-scripts eject",
-    "coverage": "cross-env TZ=UTC npm run test -- --coverage --watchAll=false",
-    "locktt": "locktt"
+    "coverage": "cross-env TZ=UTC npm run test -- --coverage --watchAll=false"
   },
   "jest-junit": {
     "outputDirectory": "./target/test-reports",

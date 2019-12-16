@@ -3,6 +3,10 @@ addPerson:
   title: Person added successfully
   message: "{{name}} was added successfully."
   
+updatePerson:
+  title: Person updated successfully
+  message: "Person with id {{id}} was updated successfully."
+  
 removePerson:
   title: Person removed successfully
   message: "{{name}} was removed successfully."

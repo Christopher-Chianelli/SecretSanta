@@ -6,3 +6,7 @@ refresh: Refresh
 save: Save
 delete: Delete
 name: Name
+loading: Loading...
+back: Back
+secretFactor: Secret Factor
+location: Location

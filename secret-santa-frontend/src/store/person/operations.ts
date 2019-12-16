@@ -42,7 +42,7 @@ export const removePerson: ThunkCommandFactory<Person,  AddAlertAction | RemoveP
 export const updatePerson: ThunkCommandFactory<Person,  AddAlertAction | UpdatePersonAction> = person =>
   (dispatch, state, client) => {
 	const personId = person.id;
-    return client.post<Person>(`/persons/${person.id}`, person).then(updatedPerson => {
+    return client.put<Person>(`/persons/${person.id}`, person).then(updatedPerson => {
       dispatch(alert.showSuccessMessage("updatePerson", { id: person.id }));
       dispatch(actions.updatePerson(updatedPerson));
     });

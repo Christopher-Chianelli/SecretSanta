@@ -17,7 +17,6 @@
 package org.optaweb.secretsanta.solver;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 
 import org.optaplanner.core.api.score.buildin.hardmediumsoftbigdecimal.HardMediumSoftBigDecimalScore;
 import org.optaplanner.core.api.score.stream.Constraint;
@@ -37,7 +36,8 @@ public class SecretSantaConstraintProvider implements ConstraintProvider {
         		sameGifterConflict(constraintFactory),
         		gifterIsRecieverConflict(constraintFactory),
         		largerDistanceAward(constraintFactory),
-        		largerSecretAward(constraintFactory)
+        		largerSecretAward(constraintFactory),
+        		giftPair(constraintFactory)
         };
     }
 
@@ -67,7 +67,14 @@ public class SecretSantaConstraintProvider implements ConstraintProvider {
         return constraintFactory
                 .from(SecretSantaAssignment.class)
                 .filter(assignment -> assignment.getGifter() == null || assignment.getReciever() == null)
-                .penalize("No Gifter or Reciever", HardMediumSoftBigDecimalScore.ONE_MEDIUM);
+                .penalize("No Gifter or Reciever", HardMediumSoftBigDecimalScore.ONE_HARD);
+    }
+    
+    private Constraint giftPair(ConstraintFactory constraintFactory) {
+        return constraintFactory
+                .fromUniquePair(SecretSantaAssignment.class,
+                                Joiners.equal(SecretSantaAssignment::getGifter, SecretSantaAssignment::getReciever))
+                .penalize("Gifter-Reciever Cycle", HardMediumSoftBigDecimalScore.ONE_MEDIUM);
     }
     
     private Constraint largerDistanceAward(ConstraintFactory constraintFactory) {

@@ -85,7 +85,7 @@ public class SecretSantaConstraintProvider implements ConstraintProvider {
                  .filter(assignment -> assignment.getGifter() != null && assignment.getReciever() != null)
                  .rewardConfigurableBigDecimal("secretFactor", "Larger Secret Distance Award",
                     m -> 
-                 BigDecimal.valueOf(m.getGifter().getSecretFactor() - m.getReciever().getSecretFactor()).pow(4));
+                 BigDecimal.valueOf(Math.abs(m.getGifter().getSecretFactor() - m.getReciever().getSecretFactor())));
     }
 
 }

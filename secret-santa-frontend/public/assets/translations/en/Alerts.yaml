@@ -7,6 +7,10 @@ removePerson:
   title: Person removed successfully
   message: "{{name}} was removed successfully."
   
+updateConfig:
+  title: Config updated successfully
+  message: ""
+  
 startedSolving:
   title: Info
   message: Started solving.

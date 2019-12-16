@@ -20,6 +20,7 @@ import RestServiceClient from './rest/RestServiceClient';
 import { PersonList } from 'store/person/types';
 import { AlertList } from './alert/types';
 import { ResultViewHolder } from './assignments/types';
+import { Configuration } from './config/types';
 
 /**
  * ThunkCommand is a ThunkAction that has no result (it's typically something like
@@ -57,4 +58,5 @@ export interface AppState {
   readonly personList: PersonList;
   readonly alerts: AlertList;
   readonly assignments: ResultViewHolder;
+  readonly config: Configuration;
 }

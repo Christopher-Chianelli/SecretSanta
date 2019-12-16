@@ -21,7 +21,7 @@ import './App.css';
 import Background from './components/Background';
 import Header from './header/Header';
 import Alerts from './Alerts';
-import { PersonPage, AssignmentPage } from './pages';
+import { PersonPage, AssignmentPage, ConfigurationPage } from './pages';
 import { useMediaQuery } from 'react-responsive';
 import Navigation from './header/Navigation';
 
@@ -57,6 +57,12 @@ const App: React.FC = () => {
             path="/assignments"
           >
             <AssignmentPage />
+          </Route>
+          <Route
+            path="/config"
+            exact
+          >
+            <ConfigurationPage />
           </Route>
         </Switch>
       </PageSection>

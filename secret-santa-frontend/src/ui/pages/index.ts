@@ -16,5 +16,6 @@
 
 import PersonPage from './persons/PersonsPage';
 import AssignmentPage from './assignments/AssignmentPage';
+import ConfigurationPage from './config/ConfigurationPage';
 
-export { PersonPage, AssignmentPage };
+export { PersonPage, AssignmentPage, ConfigurationPage };

@@ -17,6 +17,7 @@
 package org.optaweb.secretsanta.solver;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 import org.optaplanner.core.api.score.buildin.hardmediumsoftbigdecimal.HardMediumSoftBigDecimalScore;
 import org.optaplanner.core.api.score.stream.Constraint;
@@ -35,7 +36,8 @@ public class SecretSantaConstraintProvider implements ConstraintProvider {
         		sameRecieverConflict(constraintFactory),
         		sameGifterConflict(constraintFactory),
         		gifterIsRecieverConflict(constraintFactory),
-        		largerDistanceAward(constraintFactory)
+        		largerDistanceAward(constraintFactory),
+        		largerSecretAward(constraintFactory)
         };
     }
 
@@ -72,9 +74,18 @@ public class SecretSantaConstraintProvider implements ConstraintProvider {
         return constraintFactory
                 .from(SecretSantaAssignment.class)
                 .filter(assignment -> assignment.getGifter() != null && assignment.getReciever() != null)
-                .rewardBigDecimal("Larger Distance Award", HardMediumSoftBigDecimalScore.ONE_SOFT,
+                .rewardConfigurableBigDecimal("secretFactor", "Larger Distance Award",
                                   (m) -> BigDecimal.valueOf(Location.calculateDistanceBetween(m.getGifter().getLocation(),
                                                                            m.getReciever().getLocation())));
+    }
+    
+    private Constraint largerSecretAward(ConstraintFactory constraintFactory) {
+        return constraintFactory
+                 .from(SecretSantaAssignment.class)
+                 .filter(assignment -> assignment.getGifter() != null && assignment.getReciever() != null)
+                 .rewardConfigurableBigDecimal("secretFactor", "Larger Secret Distance Award",
+                    m -> 
+                 BigDecimal.valueOf(m.getGifter().getSecretFactor() - m.getReciever().getSecretFactor()).pow(4));
     }
 
 }

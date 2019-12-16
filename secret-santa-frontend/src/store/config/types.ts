@@ -14,10 +14,19 @@
  * limitations under the License.
  */
 
-import DomainObject from './DomainObject';
-import Person from './Person';
+import { Action } from 'redux';
+import SecretSantaConstraintConfiguration from 'domain/SecretSantaConstraintConfiguration';
 
-export default interface Assignment extends DomainObject {
-  gifter: Person | null;
-  reciever: Person | null;
-};
+export enum ActionType {
+  UPDATE_CONFIG = 'UPDATE_CONFIG'
+}
+
+export interface UpdateConfigAction extends Action<ActionType.UPDATE_CONFIG> {
+  readonly config: SecretSantaConstraintConfiguration;
+}
+
+export type ConfigAction = UpdateConfigAction;
+
+export interface Configuration {
+  readonly config: SecretSantaConstraintConfiguration;
+}

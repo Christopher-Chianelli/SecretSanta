@@ -51,6 +51,6 @@ public class Location {
                 Math.sin(changeInLongitude/2) * Math.sin(changeInLongitude/2);
         Double arclength = 2 * Math.atan2(Math.sqrt(halfChordLengthSquared), Math.sqrt(1-halfChordLengthSquared));
 
-        return earthRadius * arclength;
+        return (earthRadius * arclength)/1000;
     }
 }

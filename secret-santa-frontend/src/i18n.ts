@@ -53,22 +53,7 @@ i18n
     defaultNS: 'Common',
     // Load all namespaces on boot so users don't see an empty screen
     ns: [
-      'Alerts',
-      'AvailabilityRosterPage',
       'Common',
-      'ContractsPage',
-      'EditAvailabilityModal',
-      'EditShiftModal',
-      'EditShiftTemplateModal',
-      'EmployeesPage',
-      'Navigation',
-      'NewTenantFormModal',
-      'RestServiceClient',
-      'RotationPage',
-      'ServerSideException',
-      'ShiftEvent',
-      'ShiftRosterPage',
-      'SpotsPage'
     ],
     debug: true,
     backend: {

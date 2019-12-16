@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-import DomainObject from './DomainObject';
-import Person from './Person';
+import SecretSantaConstraintConfiguration from 'domain/SecretSantaConstraintConfiguration';
+import { ActionFactory } from '../types';
+import { ActionType, UpdateConfigAction } from './types';
 
-export default interface Assignment extends DomainObject {
-  gifter: Person | null;
-  reciever: Person | null;
-};
+export const updateConfig: ActionFactory<SecretSantaConstraintConfiguration, UpdateConfigAction> = config => ({
+  type: ActionType.UPDATE_CONFIG,
+  config
+});

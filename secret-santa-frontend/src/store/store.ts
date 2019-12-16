@@ -24,6 +24,7 @@ import RestServiceClient from './rest';
 import { AppState } from './types';
 import personReducer from './person/reducers';
 import alertReducer from './alert/reducers';
+import configReducer from './config';
 import axios from 'axios';
 import assignmentsReducer from './assignments/reducers';
 
@@ -48,7 +49,8 @@ export function configureStore(
   const rootReducer = combineReducers<AppState>({
     personList: personReducer,
     assignments: assignmentsReducer,
-    alerts: alertReducer
+    alerts: alertReducer,
+    config: configReducer
   });
 
   /* if (process.env.NODE_ENV !== 'production' && module.hot) {

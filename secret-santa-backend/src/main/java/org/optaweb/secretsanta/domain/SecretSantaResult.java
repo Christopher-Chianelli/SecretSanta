@@ -18,6 +18,7 @@ package org.optaweb.secretsanta.domain;
 
 import java.util.List;
 
+import org.optaplanner.core.api.domain.constraintweight.ConstraintConfigurationProvider;
 import org.optaplanner.core.api.domain.solution.PlanningEntityCollectionProperty;
 import org.optaplanner.core.api.domain.solution.PlanningScore;
 import org.optaplanner.core.api.domain.solution.PlanningSolution;
@@ -34,6 +35,9 @@ public class SecretSantaResult {
     private List<Person> personList;
     @PlanningEntityCollectionProperty
     private List<SecretSantaAssignment> secretSantaAssignmentList;
+    
+    @ConstraintConfigurationProvider
+    private SecretSantaConstraintConfiguration constraintConfiguration;
 
     @PlanningScore(scoreDefinitionClass=HardMediumSoftBigDecimalScoreDefinition.class)
     private HardMediumSoftBigDecimalScore score;
@@ -41,9 +45,10 @@ public class SecretSantaResult {
     private SecretSantaResult() {
     }
 
-    public SecretSantaResult(List<Person> personList, List<SecretSantaAssignment> secretSantaAssignmentList) {
+    public SecretSantaResult(List<Person> personList, List<SecretSantaAssignment> secretSantaAssignmentList, SecretSantaConstraintConfiguration constraintConfiguration) {
         this.personList = personList;
         this.secretSantaAssignmentList = secretSantaAssignmentList;
+        this.constraintConfiguration = constraintConfiguration;
     }
 
     public List<Person> getPersonList() {
@@ -52,6 +57,14 @@ public class SecretSantaResult {
 
     public List<SecretSantaAssignment> getSecretSantaAssignmentList() {
         return secretSantaAssignmentList;
+    }
+    
+    public SecretSantaConstraintConfiguration getConstraintConfiguration() {
+        return constraintConfiguration;
+    }
+    
+    public void setConstraintConfiguration(SecretSantaConstraintConfiguration constraintConfiguration) {
+        this.constraintConfiguration = constraintConfiguration;
     }
 
     public HardMediumSoftBigDecimalScore getScore() {

@@ -15,9 +15,9 @@
  */
 
 import DomainObject from './DomainObject';
-import Person from './Person';
+import HardMediumSoftScore from './HardMediumSoftScore';
 
-export default interface Assignment extends DomainObject {
-  gifter: Person | null;
-  reciever: Person | null;
-};
+export default interface SecretSantaConstraintConfiguration extends DomainObject {
+  largerSecretDistanceAward: HardMediumSoftScore;
+  largerDistanceAward: HardMediumSoftScore;
+}

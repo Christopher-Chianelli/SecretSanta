@@ -17,6 +17,7 @@
 package org.optaweb.secretsanta.persistence;
 
 import org.optaweb.secretsanta.domain.SecretSantaAssignment;
+import org.optaweb.secretsanta.domain.SecretSantaConstraintConfiguration;
 import org.optaweb.secretsanta.domain.SecretSantaResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,16 +34,21 @@ public class SecretSantaResultRepository {
     private SecretSantaAssignmentRepository secretSantaAssignmentRepository;
     @Autowired
     private PersonRepository personRepository;
+    @Autowired
+    private SecretSantaConstraintConfigurationRepository secretSantaConstraintConfigurationRepository;
 
     public SecretSantaResult findById(Long id) {
         if (!SINGLETON_TIME_TABLE_ID.equals(id)) {
             throw new IllegalStateException("There is no timeTable with id (" + id + ").");
         }
+        
+        SecretSantaConstraintConfiguration config = secretSantaConstraintConfigurationRepository.findById(id).get();
         // Occurs in a single transaction, so each initialized lesson references the same timeslot/room instance
         // that is contained by the timeTable's timeslotList/roomList.
         return new SecretSantaResult(
         		personRepository.findAll(),
-                secretSantaAssignmentRepository.findAll()
+                secretSantaAssignmentRepository.findAll(),
+                config
               );
     }
 

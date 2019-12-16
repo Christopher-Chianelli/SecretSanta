@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-import DomainObject from './DomainObject';
-import Person from './Person';
+import * as configOperations from './operations';
+import reducer from './reducers';
 
-export default interface Assignment extends DomainObject {
-  gifter: Person | null;
-  reciever: Person | null;
+export {
+  configOperations
 };
+
+export default reducer;

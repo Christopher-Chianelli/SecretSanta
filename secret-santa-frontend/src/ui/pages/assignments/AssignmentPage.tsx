@@ -90,11 +90,16 @@ export const PeopleList: React.FC<Props> = (props) => {
            display: "grid",
            height: '60px',
            padding: '5px 5px 5px 5px',
-           gridTemplateColumns: 'auto 1fr',
+           gridTemplateColumns: 'auto auto 1fr',
            backgroundColor: 'var(--pf-global--BackgroundColor--100)',
          }}
       >
         <ScoreDisplay score={resultView.result.score} />
+        <span>Total Distance: {
+            `${Math.floor(resultView.result.secretSantaAssignmentList
+              .reduce((prev, assignment) => prev + ((assignment.gifter && assignment.reciever)? 
+                  distance(assignment.gifter.location, assignment.reciever.location) : 0),
+                  0))} km`}</span>
         <Actions
           actions={actions}
         />
@@ -106,9 +111,10 @@ export const PeopleList: React.FC<Props> = (props) => {
           resultView.result.secretSantaAssignmentList.map<IRow>(assignment => (
             {
               cells: [
-                (<td key={0}><Text>{assignment.gifter.name}</Text></td>),
-                (<td key={0}><Text>{assignment.reciever.name}</Text></td>),
-                (<td key={0}><Text>{distance(assignment.gifter.location, assignment.reciever.location)}</Text></td>),
+                (<td key={0}><Text>{assignment.gifter? assignment.gifter.name : assignment.id}</Text></td>),
+                (<td key={0}><Text>{assignment.reciever? assignment.reciever.name : ""}</Text></td>),
+                (<td key={0}><Text>{(assignment.gifter && assignment.reciever)? 
+                  `${Math.floor(distance(assignment.gifter.location, assignment.reciever.location)/1000)} km` : ""}</Text></td>),
               ]
             }))
         }

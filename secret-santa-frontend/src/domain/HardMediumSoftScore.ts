@@ -40,6 +40,15 @@ export function convertHardMediumSoftScoreToString(hardMediumSoftScore: HardMedi
   return out? out : "0";
 }
 
+export function convertHardMediumSoftScoreToFullString(hardMediumSoftScore: HardMediumSoftScore) {
+  let out = "0init/";
+  out = out + `${hardMediumSoftScore.hardScore}hard`;
+  out = out + (out? "/" : "") + `${hardMediumSoftScore.mediumScore}medium`;
+  out = out + (out? "/" : "") + `${hardMediumSoftScore.softScore}soft`;
+  console.log(out);
+  return out;
+}
+
 export default interface HardMediumSoftScore {
   hardScore: number;
   mediumScore: number;

@@ -1,3 +1,20 @@
-= Secret Santa
+= Secret Santa Backend
 
 Plan your secret santa with Optaplanner!
+
+== Build and Run with Maven
+
+In the project backend directory, run the following command to build from source:
+
+----
+mvn clean install -DskipTests
+----
+
+Compile and run the backend:
+
+----
+mvn spring-boot:run
+----
+
+Note that the in-memory database loses all data when the application restarts.
+

@@ -31,61 +31,50 @@ public class SecretSantaConstraintProvider implements ConstraintProvider {
     @Override
     public Constraint[] defineConstraints(ConstraintFactory constraintFactory) {
         return new Constraint[] {
-                noReciever(constraintFactory),
-                sameRecieverConflict(constraintFactory),
-                gifterIsRecieverConflict(constraintFactory),
+                sameReceiverConflict(constraintFactory),
+                gifterIsReceiverConflict(constraintFactory),
                 largerDistanceAward(constraintFactory),
                 largerSecretAward(constraintFactory),
                 giftPair(constraintFactory)
         };
     }
 
-    private Constraint sameRecieverConflict(ConstraintFactory constraintFactory) {
+    private Constraint sameReceiverConflict(ConstraintFactory constraintFactory) {
         return constraintFactory
                 .fromUniquePair(SecretSantaAssignment.class,
-                        Joiners.equal(SecretSantaAssignment::getReciever))
-                .penalize("Same Reciever", HardMediumSoftBigDecimalScore.ONE_HARD);
+                        Joiners.equal(SecretSantaAssignment::getReceiver))
+                .penalize("Same Receiver", HardMediumSoftBigDecimalScore.ONE_HARD);
     }
     
-    private Constraint gifterIsRecieverConflict(ConstraintFactory constraintFactory) {
+    private Constraint gifterIsReceiverConflict(ConstraintFactory constraintFactory) {
         return constraintFactory
                 .from(SecretSantaAssignment.class)
-                .filter(assignment -> assignment.getReciever() != null)
-                .filter(assignment -> assignment.getGifter().equals(assignment.getReciever()))
-                .penalize("Gifter is Reciever", HardMediumSoftBigDecimalScore.ONE_HARD);
-    }
-    
-    private Constraint noReciever(ConstraintFactory constraintFactory) {
-        return constraintFactory
-                .from(SecretSantaAssignment.class)
-                .filter(assignment -> assignment.getReciever() == null)
-                .penalize("No Reciever", HardMediumSoftBigDecimalScore.ONE_HARD);
+                .filter(assignment -> assignment.getGifter().equals(assignment.getReceiver()))
+                .penalize("Gifter is Receiver", HardMediumSoftBigDecimalScore.ONE_HARD);
     }
     
     private Constraint giftPair(ConstraintFactory constraintFactory) {
         return constraintFactory
                 .fromUniquePair(SecretSantaAssignment.class,
-                                Joiners.equal(SecretSantaAssignment::getGifter, SecretSantaAssignment::getReciever),
-                                Joiners.equal(SecretSantaAssignment::getReciever, SecretSantaAssignment::getGifter))
-                .penalize("Gifter-Reciever Cycle", HardMediumSoftBigDecimalScore.ONE_MEDIUM);
+                                Joiners.equal(SecretSantaAssignment::getGifter, SecretSantaAssignment::getReceiver),
+                                Joiners.equal(SecretSantaAssignment::getReceiver, SecretSantaAssignment::getGifter))
+                .penalize("Gifter-Receiver Cycle", HardMediumSoftBigDecimalScore.ONE_MEDIUM);
     }
     
     private Constraint largerDistanceAward(ConstraintFactory constraintFactory) {
         return constraintFactory
                 .from(SecretSantaAssignment.class)
-                .filter(assignment -> assignment.getGifter() != null && assignment.getReciever() != null)
                 .rewardConfigurableBigDecimal("secretFactor", "Larger Distance Award",
                                   (m) -> BigDecimal.valueOf(Location.calculateDistanceBetween(m.getGifter().getLocation(),
-                                                                           m.getReciever().getLocation())));
+                                                                           m.getReceiver().getLocation())));
     }
     
     private Constraint largerSecretAward(ConstraintFactory constraintFactory) {
         return constraintFactory
                  .from(SecretSantaAssignment.class)
-                 .filter(assignment -> assignment.getGifter() != null && assignment.getReciever() != null)
                  .rewardConfigurableBigDecimal("secretFactor", "Larger Secret Distance Award",
                     m -> 
-                 BigDecimal.valueOf(Math.abs(m.getGifter().getSecretFactor() - m.getReciever().getSecretFactor())));
+                 BigDecimal.valueOf(Math.abs(m.getGifter().getSecretFactor() - m.getReceiver().getSecretFactor())));
     }
 
 }

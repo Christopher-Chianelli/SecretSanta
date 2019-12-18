@@ -28,7 +28,7 @@ public class WebConfig implements WebMvcConfigurer {
         // Arcane Spring Boot Magic from https://stackoverflow.com/a/42998817
         
         // Forwards non rest url's /index.html
-        registry.addViewController("/**/{path:^(?!rest).*}/{path:[^\\.]*}")
+        registry.addViewController("/{path:^(?!rest).*}/{spring:\\w+}")
               .setViewName("forward:/");
         
         // Forwards urls with only one path element to /index.html

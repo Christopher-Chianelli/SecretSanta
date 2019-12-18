@@ -44,14 +44,14 @@ public class SecretSantaAssignment {
     
     @PlanningVariable(valueRangeProviderRefs = "personRange")
     @ManyToOne
-    private Person reciever;
+    private Person receiver;
 
     private SecretSantaAssignment() {
     }
 
     public SecretSantaAssignment(Person gifter, Person reciever) {
         this.gifter = gifter;
-        this.reciever = reciever;
+        this.receiver = reciever;
     }
 
     public Long getId() {
@@ -66,17 +66,17 @@ public class SecretSantaAssignment {
         this.gifter = gifter;
     }
 
-    public Person getReciever() {
-        return reciever;
+    public Person getReceiver() {
+        return receiver;
     }
 
-    public void setReciever(Person reciever) {
-        this.reciever = reciever;
+    public void setReceiver(Person reciever) {
+        this.receiver = reciever;
     }
 
     @Override
     public String toString() {
-        return gifter.getName() + " -> [&] -> " + ((reciever != null)? reciever.getName() : "Unassigned");
+        return gifter.getName() + " -> [&] -> " + ((receiver != null)? receiver.getName() : "Unassigned");
     }
 
 }

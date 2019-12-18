@@ -1,0 +1,33 @@
+= Secret Santa as a Service
+
+== Building
+
+Build the project with maven in the project's root directory:
+
+[source,shell]
+----
+mvn clean install -DskipTests -DskipITs
+----
+
+== Running
+
+After building the project, run the application with:
+
+[source,shell]
+----
+java -jar secret-santa-standalone/target/secret-santa-standalone-*-exec.jar
+----
+
+Then open http://localhost:8080/ to see the web application.
+
+Alternatively, run `npm start` in `secret-santa-frontend` to start the frontend in one terminal,
+and run `mvn spring-boot:run` in `secret-santa-backend` to start the backend in another terminal.
+
+=== Use a different port
+
+To run on an another port use `--server.port=...`:
+
+[source,shell]
+----
+java -jar secret-santa-standalone/target/secret-santa-standalone-*-exec.jar --server.port=18080
+----

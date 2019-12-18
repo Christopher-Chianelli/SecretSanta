@@ -19,5 +19,5 @@ import Person from './Person';
 
 export default interface Assignment extends DomainObject {
   gifter: Person | null;
-  reciever: Person | null;
+  receiver: Person | null;
 };

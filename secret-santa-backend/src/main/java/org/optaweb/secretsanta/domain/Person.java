@@ -57,8 +57,8 @@ public class Person {
     // on delete, so we need to do it manually on
     // the deleted entity, and to do that we need to have
     // the entities to update
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reciever")
-    private Set<SecretSantaAssignment> recievers;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "receiver")
+    private Set<SecretSantaAssignment> receivers;
 
     private Person() {
     }
@@ -70,7 +70,7 @@ public class Person {
     
     @PreRemove
     private void preRemove() {
-        recievers.forEach( child -> child.setReciever(null));
+        receivers.forEach( child -> child.setReceiver(null));
     }
 
     public Long getId() {

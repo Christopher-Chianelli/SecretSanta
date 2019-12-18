@@ -97,8 +97,8 @@ export const PeopleList: React.FC<Props> = (props) => {
         <ScoreDisplay score={resultView.result.score} />
         <span>Total Distance: {
             `${Math.floor(resultView.result.secretSantaAssignmentList
-              .reduce((prev, assignment) => prev + ((assignment.gifter && assignment.reciever)? 
-                  distance(assignment.gifter.location, assignment.reciever.location) : 0),
+              .reduce((prev, assignment) => prev + ((assignment.gifter && assignment.receiver)? 
+                  distance(assignment.gifter.location, assignment.receiver.location) : 0),
                   0))} km`}</span>
         <Actions
           actions={actions}
@@ -106,15 +106,15 @@ export const PeopleList: React.FC<Props> = (props) => {
       </span>
       <Table
         caption={t("Assignments")}
-        cells={[t("gifter"), t("reciever"), t("distance")]}
+        cells={[t("gifter"), t("receiver"), t("distance")]}
         rows={
           resultView.result.secretSantaAssignmentList.map<IRow>(assignment => (
             {
               cells: [
                 (<td key={0}><Text>{assignment.gifter? assignment.gifter.name : assignment.id}</Text></td>),
-                (<td key={0}><Text>{assignment.reciever? assignment.reciever.name : ""}</Text></td>),
-                (<td key={0}><Text>{(assignment.gifter && assignment.reciever)? 
-                  `${Math.floor(distance(assignment.gifter.location, assignment.reciever.location)/1000)} km` : ""}</Text></td>),
+                (<td key={0}><Text>{assignment.receiver? assignment.receiver.name : ""}</Text></td>),
+                (<td key={0}><Text>{(assignment.gifter && assignment.receiver)? 
+                  `${Math.floor(distance(assignment.gifter.location, assignment.receiver.location)/1000)} km` : ""}</Text></td>),
               ]
             }))
         }

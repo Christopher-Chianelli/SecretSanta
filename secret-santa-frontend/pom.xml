@@ -26,7 +26,7 @@
   </parent>
 
   <artifactId>secret-santa-frontend</artifactId>
-  <name>Secret Sabta React Frontend</name>
+  <name>Secret Santa React Frontend</name>
   <description>React frontend for Secret Santa</description>
   <packaging>pom</packaging>
 

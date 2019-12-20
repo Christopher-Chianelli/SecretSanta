@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <solver>
+  <environmentMode>FULL_ASSERT</environmentMode>
   <constructionHeuristic>
     <constructionHeuristicType>FIRST_FIT</constructionHeuristicType>
   </constructionHeuristic>
   
   <localSearch>
-    <swapMoveSelector/>
+    <moveIteratorFactory>
+      <moveIteratorFactoryClass>org.optaweb.secretsanta.solver.SecretSantaResultRotationMoveIteratorFactory</moveIteratorFactoryClass>
+      <moveIteratorFactoryCustomProperties>
+        <rotationLength>3</rotationLength>
+      </moveIteratorFactoryCustomProperties>
+    </moveIteratorFactory>
   </localSearch>
 </solver>
